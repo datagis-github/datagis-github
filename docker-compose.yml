@@ -1,0 +1,23 @@
+services:
+
+  api_service:
+    container_name: api_service
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: api_service
+    ports:
+      - '8104:80'
+    restart: always
+    volumes:
+      - ./nginx:/usr/local/openresty/nginx/conf
+      - ./core:/core
+      - ./logs:/usr/local/openresty/nginx/logs
+      - /etc/localtime:/etc/localtime:ro
+      - ./envs.lua:/envs.lua
+
+
+networks:
+  default:
+    name: "project-network"
+    external: true
